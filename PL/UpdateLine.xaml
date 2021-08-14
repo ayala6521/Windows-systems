@@ -1,0 +1,80 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="PL.UpdateLine"
+        mc:Ignorable="d"
+        Title="UpdateLine" Height="519.6" Width="626" >
+    <Window.Resources>
+        <DataTemplate x:Key="frequencyTemplate"
+                  DataType="local:TimeSpan" x:Name="timespan">
+            <Grid HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="50" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                   Text="{Binding}"  />
+                <Image Grid.Column="1"
+                     MouseDown="Delete_Frequency_Button_Click" Name="DeleteFrequencyButton" Margin="13,0,0,0" IsEnabled="True" Source="GARBAGE.jpg"  />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="stationInLineTemplate"
+                      DataType="local:stationInLine" x:Name="stationInLine">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="50" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+             Text="{Binding}" />
+                <Image Grid.Column="1" x:Name="IUpdate" MouseDown="UpdateTimeDis_Button_Click" Source="MAP.jpg" Margin="13,0,0,0" />
+                <Image Grid.Column="2" x:Name="IDelete" Source="GARBAGE.jpg" MouseDown="Delete_Station_Button_Click" Margin="13,0,0,0" />
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="לוגו מעודכן סופי 1.jpg" Opacity="0.20" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="385,23,0,0" VerticalAlignment="Top" Height="102" Width="210">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="אזור" Grid.Column="1" HorizontalAlignment="Left" Margin="50.8,3,-2.4,3.4" Grid.Row="2" VerticalAlignment="Center"/>
+            <ComboBox x:Name="areaComboBox" Grid.Column="0"  HorizontalAlignment="Left" Height="Auto" SelectedItem="{Binding Area}" Margin="3" Grid.Row="2" VerticalAlignment="Center" Width="120">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+            <Label Content="מזהה קו" Grid.Column="1" HorizontalAlignment="Left" Margin="30.8,3.2,-4,8" Grid.Row="1" VerticalAlignment="Center"/>
+            <TextBox x:Name="lineIdTextBox" Grid.Column="0" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding LineId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Content="מספר קו" Grid.Column="1" HorizontalAlignment="Left" Margin="28.8,0,-22,11.8" Grid.Row="0" VerticalAlignment="Bottom"/>
+            <TextBox x:Name="lineNumTextBox" Grid.Column="0" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding LineNum, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+        </Grid>
+        <ListBox x:Name="LbStationsInLine" HorizontalAlignment="Left" ItemsSource="{Binding}" ItemTemplate="{StaticResource stationInLineTemplate}" Height="221" Margin="15,11,0,0" VerticalAlignment="Top" Width="210"/>
+        <Button Content="הוסף תחנה חדשה" HorizontalAlignment="Left" Margin="22,254,0,0" VerticalAlignment="Top"  Click="Button_Click_Add"/>
+        <Button Content="שמירה" HorizontalAlignment="Left" Margin="6,437,0,0" VerticalAlignment="Top" Click="Button_Click_Save" />
+        <TextBox x:Name="TBTime" HorizontalAlignment="Left" Height="23" Margin="481,410,0,0" TextWrapping="Wrap" Text="00:00:00" VerticalAlignment="Top" Width="120"/>
+        <ListBox x:Name="LBTime" HorizontalAlignment="Left" Height="171" Margin="360,215,0,0" VerticalAlignment="Top" Width="200" ItemsSource="{Binding}" ItemTemplate="{StaticResource frequencyTemplate}"/>
+        <Button Content="הוספה" HorizontalAlignment="Left" Margin="258,400,0,0" VerticalAlignment="Top" Click="Button_Click_AddTime" RenderTransformOrigin="-0.392,-0.404" />
+        <Label Content=":זמני הגעת הקו" HorizontalAlignment="Right" Margin="0,174,61.2,0" VerticalAlignment="Top" Height="34" Width="149" FontSize="20"/>
+    </Grid>
+</Window>
